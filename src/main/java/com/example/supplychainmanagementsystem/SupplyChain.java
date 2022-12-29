@@ -3,7 +3,6 @@ package com.example.supplychainmanagementsystem;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,15 +11,17 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class SupplyChain extends Application {
 
     public static final int width = 700, height = 600, headerBar = 50;
     Pane bodyPane = new Pane();
+    Login login = new Login();
+    ProductDetails productDetails = new ProductDetails();
+
 
     private GridPane headerBar(){
         TextField searchText = new TextField();
@@ -49,7 +50,12 @@ public class HelloApplication extends Application {
             public void handle(ActionEvent actionEvent) {
                 String email = emailTextField.getText();
                 String password = passwordTextField.getText();
-                messageLabel.setText(email + " $$ "+password);
+                if(login.customerLogin(email,password)){
+                    messageLabel.setText("Login Successful");
+                } else {
+                    messageLabel.setText("Login Failed");
+                }
+//                messageLabel.setText(email + " $$ "+password);
             }
         });
 
@@ -75,7 +81,7 @@ public class HelloApplication extends Application {
 
         bodyPane.setMinSize(width,height);
         bodyPane.setTranslateY(headerBar);
-        bodyPane.getChildren().addAll(loginPage());
+        bodyPane.getChildren().addAll(productDetails.getAllProducts());
 
 
         root.getChildren().addAll(headerBar(),bodyPane);
@@ -86,7 +92,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(createContent());
-        stage.setTitle("Hello!");
+        stage.setTitle("Supply Chain");
         stage.setScene(scene);
         stage.show();
     }
