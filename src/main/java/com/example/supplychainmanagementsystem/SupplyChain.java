@@ -76,6 +76,8 @@ public class HelloApplication extends Application {
         bodyPane.setMinSize(width,height);
         bodyPane.setTranslateY(headerBar);
         bodyPane.getChildren().addAll(loginPage());
+
+
         root.getChildren().addAll(headerBar(),bodyPane);
         return root;
     }
